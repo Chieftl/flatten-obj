@@ -7,6 +7,15 @@ module.exports = function (options) {
   var blacklist = options.blacklist || []
   var separator = options.separator == null ? '.' : options.separator
   var onlyLeaves = options.onlyLeaves && true
+  if (options.brackets == null) {
+    var brackets = ['', '']
+  } else {
+    var brackets = options.brackets == true ? ['[', ']'] : options.brackets.split('')
+    if (options.separator == null) {
+      separator = '';
+    }
+  }
+  
 
   return flatten
 
@@ -21,14 +30,15 @@ module.exports = function (options) {
 
     for (var n = 0; n < keys.length; n++) {
       var key = keys[n]
-      var val = obj[key]
+      var keyWrapped = '[' + key + ']'
+      var val = obj[keys[n]]
 
       if (isObj(val) && !isBlacklisted(val)) {
-        iterator(val, prefix + key + separator, flattened)
+        iterator(val, prefix + (prefix ? keyWrapped : key) + separator, flattened)
         continue
       }
 
-      onlyLeaves ? flattened[key] = val : flattened[prefix + key] = val
+      onlyLeaves ? flattened[keyWrapped] = val : flattened[prefix + keyWrapped] = val
     }
   }
 

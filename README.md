@@ -109,6 +109,23 @@ var obj = {
 console.log(flatten(obj))
 ```
 
+### Brackets
+
+Replace separator style to brackets (usable for URL query)
+
+```js
+var flatten = require('flatten-obj')({ brackets: true })
+
+var obj = {
+  foo: {
+    bar: 1
+  }
+}
+
+// outputs `{ 'foo[bar]': 1 }`
+console.log(flatten(obj))
+```
+
 ## Gotchas
 
 ### MongoDB data types
